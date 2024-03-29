@@ -1,6 +1,5 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:focus_area_app/features/home_screen.dart/ui/widgets/app_bar_home_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -8,8 +7,24 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text(' just for test on source tree'),
+      body: Container(
+        padding:
+            const EdgeInsets.only(left: 20, right: 20, top: 60, bottom: 20),
+        child:const Column(
+          children:  [
+            // app bar
+            AppBarForHomeScreen()
+
+            // quick focus
+
+
+            // divider
+
+
+
+            // custom focus
+          ],
+        ),
       ),
     );
   }
