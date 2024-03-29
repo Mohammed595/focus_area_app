@@ -12,7 +12,7 @@ class AppBarForHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 200,          
+      height: 50,          
       width: double.infinity,
       child: Stack(
         alignment: Alignment.topCenter,
