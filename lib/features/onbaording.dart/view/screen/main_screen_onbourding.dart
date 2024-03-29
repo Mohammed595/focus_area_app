@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:focus_area_app/core/contsans/assets_path.dart';
 import 'package:focus_area_app/core/contsans/colors.dart';
 import 'package:focus_area_app/core/routring/routers.dart';
+import 'package:focus_area_app/features/onbaording.dart/data/local_data_source.dart';
 import 'package:focus_area_app/features/onbaording.dart/view/widgets/app_bar_onboarding.dart';
 import 'package:focus_area_app/features/onbaording.dart/view/widgets/btn_onboarding.dart';
 import 'package:focus_area_app/features/onbaording.dart/view/widgets/cover_title_disc.dart';
@@ -123,7 +124,9 @@ class _MainPageOnBoardingState extends State<MainPageOnBoarding> {
                     indexOfPage = 2;
                     toGoAnotherPage(indexOfPage);
                   } else {
-                    // go to get start
+                    // go to Home Screen
+                    SharedPrefServ.setNewStateToOnBoardngState(true);
+                    print('Done Change');
                     Navigator.of(context)
                         .pushReplacementNamed(Routers.homeScreen);
                   }

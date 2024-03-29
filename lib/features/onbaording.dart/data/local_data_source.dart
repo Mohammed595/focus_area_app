@@ -1,11 +1,14 @@
 
+import 'package:focus_area_app/core/contsans/key.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefServ {
 
-  late SharedPreferences sharedPref ;
+  static late SharedPreferences sharedPref ;
 
   SharedPrefServ();
+
+  
 
 
   static Future <SharedPrefServ> create () async {
@@ -20,6 +23,14 @@ class SharedPrefServ {
     sharedPref = await SharedPreferences.getInstance();
   }
 
+ static void setNewStateToOnBoardngState( bool newState) {
+      sharedPref.setBool(AppKeies.onBoardingState, newState);
+  }
+
+
+  static bool checkonBoardingState () {
+   return  sharedPref.getBool(AppKeies.onBoardingState) == true;
+  }
 
 
 }
