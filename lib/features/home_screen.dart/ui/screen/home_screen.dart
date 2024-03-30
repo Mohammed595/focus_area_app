@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:focus_area_app/features/home_screen.dart/ui/widgets/app_bar_home_screen.dart';
+import 'package:focus_area_app/features/home_screen.dart/ui/widgets/custom_focus_widget.dart';
 import 'package:focus_area_app/features/home_screen.dart/ui/widgets/quick_focus_widget.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -13,6 +13,7 @@ class HomeScreen extends StatelessWidget {
         padding:
             const EdgeInsets.only(left: 25, right: 25, top: 70, bottom: 20),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // app bar
             const AppBarForHomeScreen(),
@@ -26,20 +27,31 @@ class HomeScreen extends StatelessWidget {
               onTap: () {
                 print('object');
               },
-              child: QuickFocusWidget(),
+              child: const QuickFocusWidget(),
             ),
 
-            SizedBox(
-              height: 20,
+            const SizedBox(
+              height: 10,
             ),
 
             // divider
             Divider(
-              color:Colors.grey,
+              color: Colors.grey.shade400,
               height: 1,
-            )
+            ),
+
+            const SizedBox(
+              height: 10,
+            ),
+
+            const Text('custom'),
+            const SizedBox(
+              height: 10,
+            ),
 
             // custom focus
+
+           const  CustomFocusWidget(),
           ],
         ),
       ),

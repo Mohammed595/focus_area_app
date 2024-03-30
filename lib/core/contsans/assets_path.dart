@@ -12,4 +12,6 @@ class AppIcons {
   static const String logoWithNameIcon = 'assets/icons/logoWithName.svg';
   static const String logoAppPraimryColor = 'assets/icons/logoAppPraimryColor.svg';
   static const String peperAirPlaneIcon = 'assets/icons/peperAirPlaneIcon.svg';
+  static const String menuIcon = 'assets/icons/menuIcon.svg';
+  static const String timerIcon = 'assets/icons/timerIcon.svg';
 }
