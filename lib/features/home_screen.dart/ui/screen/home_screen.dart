@@ -14,8 +14,9 @@ class HomeScreen extends StatelessWidget {
         onTap: () {
           showModalBottomSheet(
             context: context,
+               isScrollControlled: true,
             backgroundColor: Colors.transparent,
-            isScrollControlled: true,
+         
             barrierColor: Colors.black12,
             builder: (BuildContext context) {
               return  AddNewFocus();
