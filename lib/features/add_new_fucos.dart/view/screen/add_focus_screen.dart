@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:focus_area_app/core/contsans/colors.dart';
 import 'package:focus_area_app/features/add_new_fucos.dart/view/widgets/custom_text_field_add_focus.dart';
-import 'package:focus_area_app/features/add_new_fucos.dart/view/widgets/custom_time_picker.dart';
+import 'package:focus_area_app/features/add_new_fucos.dart/view/widgets/save_btn.dart';
+import 'package:focus_area_app/features/add_new_fucos.dart/view/widgets/text_feild_period.dart';
+import 'package:focus_area_app/features/add_new_fucos.dart/view/widgets/title_for_form.dart';
 
 class AddNewFocus extends StatefulWidget {
   AddNewFocus({super.key});
@@ -12,7 +13,8 @@ class AddNewFocus extends StatefulWidget {
 
 class _AddNewFocusState extends State<AddNewFocus> {
   TimeOfDay timeOfDay = TimeOfDay.now();
-  int m = 25 ;
+  int m = 25;
+  TextEditingController textControllerM = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -48,12 +50,8 @@ class _AddNewFocusState extends State<AddNewFocus> {
           ),
 
           // title form
-          const Text(
-            'Title',
-            style: TextStyle(
-              color: Color(0xff828282),
-              fontSize: 15,
-            ),
+          const TitleForForm(
+            title: 'Title',
           ),
 
           const CustomTextFeildOfAddNewFocus(
@@ -64,13 +62,10 @@ class _AddNewFocusState extends State<AddNewFocus> {
             height: 15,
           ),
 
-          const Text(
-            'Discrition',
-            style: TextStyle(
-              color: Color(0xff828282),
-              fontSize: 15,
-            ),
+          const TitleForForm(
+            title: 'Discrition',
           ),
+
           const CustomTextFeildOfAddNewFocus(
             isDic: true,
           ),
@@ -80,74 +75,16 @@ class _AddNewFocusState extends State<AddNewFocus> {
           ),
 
           // Period
-
-          const Text(
-            'Period',
-            style: TextStyle(
-              color: Color(0xff828282),
-              fontSize: 15,
-            ),
+          const TitleForForm(
+            title: 'Period',
           ),
 
-          Center(
-            child: GestureDetector(
-              onTap: () {
-                // design new modeel sheet to determine hources
-                showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  backgroundColor: Colors.transparent,
-                  barrierColor: Colors.black12,
-                  builder: (context) {
-                    return CustomTimePicker();
-                  },
-                );
-              },
-              child: Container(
-                height: 50,
-                width: 100,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      color: AppColors.praimryColor,
-                    )),
-                padding: EdgeInsets.all(5),
-                alignment: Alignment.center,
-                child: Text(
-                  '$m M',
-                  style: const TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.praimryColor,
-                  ),
-                ),
-              ),
-            ),
-          ),
+          // here please check from enter period
+          TextFieldForPeriod(textControllerM: textControllerM),
 
-          Spacer(),
-          Center(
-            child: GestureDetector(
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-              child: Container(
-                  alignment: Alignment.center,
-                  width: 100,
-                  height: 40,
-                  decoration: BoxDecoration(
-                      color: AppColors.praimryColor,
-                      borderRadius: BorderRadius.circular(10)),
-                  child: const Text(
-                    'Save',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17,
-                    ),
-                  )),
-            ),
-          ),
+          //  Save Btn
+          const Spacer(),
+          SaveBtn(textControllerM: textControllerM),
         ],
       ),
     );
