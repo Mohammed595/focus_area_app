@@ -5,19 +5,16 @@ import 'package:focus_area_app/core/contsans/colors.dart';
 class SaveBtn extends StatelessWidget {
   const SaveBtn({
     super.key,
-    required this.textControllerM,
+    required this.func,
   });
 
-  final TextEditingController textControllerM;
+  final VoidCallback func ;
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: GestureDetector(
-        onTap: () {
-          print(textControllerM.text);
-          Navigator.of(context).pop();
-        },
+        onTap: func,
         child: Container(
             alignment: Alignment.center,
             width: 100,

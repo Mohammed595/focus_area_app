@@ -2,9 +2,12 @@
 import 'package:flutter/material.dart';
 
 class CustomTextFeildOfAddNewFocus extends StatelessWidget {
-  const CustomTextFeildOfAddNewFocus({super.key, required this.isDic});
+  const CustomTextFeildOfAddNewFocus({super.key, required this.isDic,
+  required this.textEdConlr,
+  });
 
   final bool isDic;
+  final TextEditingController textEdConlr ;
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +26,7 @@ class CustomTextFeildOfAddNewFocus extends StatelessWidget {
 
       // form
       child: TextField(
+        controller: textEdConlr,
         maxLines: isDic ? 2 : 1,
         decoration: InputDecoration(
           border: InputBorder.none,

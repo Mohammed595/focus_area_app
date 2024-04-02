@@ -1,4 +1,6 @@
 
+import 'dart:async';
+
 import 'package:focus_area_app/core/contsans/key.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,6 +23,11 @@ class SharedPrefServ {
 
   Future initSharedPref () async{
     sharedPref = await SharedPreferences.getInstance();
+  }
+
+
+  static  SharedPreferences instanceOfSharedPref () {
+    return sharedPref ;
   }
 
  static void setNewStateToOnBoardngState( bool newState) {

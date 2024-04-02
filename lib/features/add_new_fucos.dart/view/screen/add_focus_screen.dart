@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:focus_area_app/features/add_new_fucos.dart/data/save_focus_item.dart';
+import 'package:focus_area_app/features/add_new_fucos.dart/model/focus_model.dart';
 import 'package:focus_area_app/features/add_new_fucos.dart/view/widgets/custom_text_field_add_focus.dart';
 import 'package:focus_area_app/features/add_new_fucos.dart/view/widgets/save_btn.dart';
 import 'package:focus_area_app/features/add_new_fucos.dart/view/widgets/text_feild_period.dart';
@@ -12,9 +14,11 @@ class AddNewFocus extends StatefulWidget {
 }
 
 class _AddNewFocusState extends State<AddNewFocus> {
-  TimeOfDay timeOfDay = TimeOfDay.now();
   int m = 25;
-  TextEditingController textControllerM = TextEditingController();
+  TextEditingController textConlrTitle = TextEditingController();
+  TextEditingController textConlrDesc = TextEditingController();
+  TextEditingController textConlrPeriod = TextEditingController();
+  String alart = '';
 
   @override
   Widget build(BuildContext context) {
@@ -54,8 +58,9 @@ class _AddNewFocusState extends State<AddNewFocus> {
             title: 'Title',
           ),
 
-          const CustomTextFeildOfAddNewFocus(
+          CustomTextFeildOfAddNewFocus(
             isDic: false, // it's title
+            textEdConlr: textConlrTitle,
           ),
 
           const SizedBox(
@@ -66,8 +71,9 @@ class _AddNewFocusState extends State<AddNewFocus> {
             title: 'Discrition',
           ),
 
-          const CustomTextFeildOfAddNewFocus(
+          CustomTextFeildOfAddNewFocus(
             isDic: true,
+            textEdConlr: textConlrDesc,
           ),
 
           const SizedBox(
@@ -80,11 +86,41 @@ class _AddNewFocusState extends State<AddNewFocus> {
           ),
 
           // here please check from enter period
-          TextFieldForPeriod(textControllerM: textControllerM),
+          TextFieldForPeriod(
+            textControllerM: textConlrPeriod,
+          ),
+          Text(
+            alart,
+            style: TextStyle(color: Colors.red, fontSize: 10),
+          ),
 
           //  Save Btn
           const Spacer(),
-          SaveBtn(textControllerM: textControllerM),
+          SaveBtn(
+            func: () {
+              if (textConlrTitle.text.isEmpty &&
+                  textConlrDesc.text.isEmpty &&
+                  textConlrPeriod.text.isEmpty) {
+                setState(() {
+                  alart = 'Enter All Text feild is requrd';
+                });
+              } else {
+                alart = '';
+
+                setState(() {
+                  SaveFocusItemService.addNewFocusItem(
+                      focusModel: FocusModel(
+                          id: '1',
+                          title: textConlrTitle.text,
+                          description: textConlrDesc.text,
+                          period: textConlrPeriod.text,
+                          color: 'red'));
+                });
+
+                Navigator.of(context).pop();
+              }
+            },
+          ),
         ],
       ),
     );

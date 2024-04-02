@@ -1,12 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:focus_area_app/features/add_new_fucos.dart/data/save_focus_item.dart';
+import 'package:focus_area_app/features/add_new_fucos.dart/model/focus_model.dart';
 import 'package:focus_area_app/features/add_new_fucos.dart/view/screen/add_focus_screen.dart';
 import 'package:focus_area_app/features/home_screen.dart/ui/widgets/app_bar_home_screen.dart';
 import 'package:focus_area_app/features/home_screen.dart/ui/widgets/custom_focus_widget.dart';
 import 'package:focus_area_app/features/home_screen.dart/ui/widgets/quick_focus_widget.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getD();
+    fetchData();
+  }
+
+  Future<List<FocusModel>> getD() async {
+    List<FocusModel> data = await SaveFocusItemService.getAllFocuss();
+    print('items: ${data[0].title}');
+    return data;
+  }
+
+  void fetchData() async {
+    data = await getD();
+  }
+
+  List<FocusModel> data = [];
+
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,12 +42,11 @@ class HomeScreen extends StatelessWidget {
         onTap: () {
           showModalBottomSheet(
             context: context,
-               isScrollControlled: true,
+            isScrollControlled: true,
             backgroundColor: Colors.transparent,
-         
             barrierColor: Colors.black12,
             builder: (BuildContext context) {
-              return  AddNewFocus();
+              return AddNewFocus();
             },
           );
         },
@@ -46,9 +73,7 @@ class HomeScreen extends StatelessWidget {
             // app bar
             const AppBarForHomeScreen(),
 
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
 
             // quick focus
             GestureDetector(
@@ -58,28 +83,28 @@ class HomeScreen extends StatelessWidget {
               child: const QuickFocusWidget(),
             ),
 
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
 
             // divider
-            Divider(
-              color: Colors.grey.shade400,
-              height: 1,
-            ),
+            Divider(color: Colors.grey.shade400, height: 1),
 
-            const SizedBox(
-              height: 10,
-            ),
-
+            const SizedBox(height: 10),
             const Text('custom'),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
 
             // custom focus
-
-            const CustomFocusWidget(),
+            Expanded(
+                child: ListView.builder(
+                    itemCount: data.length == 0 ? 0 : data.length,
+                    itemBuilder: (con, index) {
+                      FocusModel c = data[index];
+                      return CustomFocusWidget(
+                        title: c.title,
+                        desc: c.description,
+                        period: c.period,
+                        color: c.color,
+                      );
+                    })),
           ],
         ),
       ),
