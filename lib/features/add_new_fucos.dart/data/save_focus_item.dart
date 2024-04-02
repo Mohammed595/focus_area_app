@@ -9,9 +9,8 @@ class SaveFocusItemService {
 
   static SharedPreferences shardPref = SharedPrefServ.instanceOfSharedPref();
 
-  static Future<void> addNewFocusItem({
-    required FocusModel focusModel
-  }) async {
+  // add new focus
+  static Future<void> addNewFocusItem({required FocusModel focusModel}) async {
     // fetch past data
     List<String> focusList = await shardPref.getStringList(focusItemsKey) ?? [];
 
@@ -22,6 +21,7 @@ class SaveFocusItemService {
     print('Done add new item');
   }
 
+  // fet focuss all
   static Future<List<FocusModel>> getAllFocuss() async {
     List<String> focussAsString =
         await shardPref.getStringList(focusItemsKey) ?? [];
@@ -34,9 +34,8 @@ class SaveFocusItemService {
     return list;
   }
 
-  static Future<FocusModel> getFocusItemById({
-    required String idd
-  }) async {
+  // get fouc bt id
+  static Future<FocusModel> getFocusItemById({required String idd}) async {
     List<String> getElement =
         await shardPref.getStringList(focusItemsKey) ?? [];
 
@@ -48,8 +47,18 @@ class SaveFocusItemService {
     return xx.firstWhere((element) => element.id == idd);
   }
 
+  static Future<List<FocusModel>> getD() async {
+    List<FocusModel> data = await SaveFocusItemService.getAllFocuss();
+    if (data.isEmpty) {
+      print('is empyt <><>');
+    } else {
+      print('items: ${data[0].title}');
+    }
+    return data;
+  }
 
-  static void reomveAll () {
+  // remove all focus
+  static void reomveAll() {
     shardPref.remove(focusItemsKey);
   }
 }

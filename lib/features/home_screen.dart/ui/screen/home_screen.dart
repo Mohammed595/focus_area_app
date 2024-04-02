@@ -6,6 +6,17 @@ import 'package:focus_area_app/features/home_screen.dart/ui/widgets/app_bar_home
 import 'package:focus_area_app/features/home_screen.dart/ui/widgets/custom_focus_widget.dart';
 import 'package:focus_area_app/features/home_screen.dart/ui/widgets/quick_focus_widget.dart';
 
+/*
+    my bugs: 
+
+        - after save don't show it dirctly in home page (Done √)
+        - after run app don't show dirctly in home page  (Done √)
+        - if there is't data don't show hint about it (Done √)
+
+        => remember this is problem state managment solve it 
+        >> so try rebember what the problem
+  */
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -18,29 +29,14 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
     fetchData();
   }
 
-  /*
-    my bugs: 
-        - after save don't show it dirctly in home page 
-        - after run app don't show dirctly in home page 
-        - if there is't data don't show hint about it
-  */
-
-  Future<List<FocusModel>> getD() async {
-    List<FocusModel> data = await SaveFocusItemService.getAllFocuss();
-    if (data.isEmpty) {
-      print('is empyt <><>');
-    } else {
-      print('items: ${data[0].title}');
-    }
-    return data;
-  }
-
-  void fetchData() async {
-    data = await getD();
+  Future<void> fetchData() async {
+    List<FocusModel> fetchedData = await SaveFocusItemService.getD();
+    setState(() {
+      data = fetchedData;
+    });
   }
 
   List<FocusModel> data = [];
@@ -101,24 +97,35 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 10),
 
             // custom focus
-            Expanded(
-                child: ListView.builder(
-                    itemCount: data.length == 0 ? 0 : data.length,
-                    itemBuilder: (con, index) {
-                      FocusModel c = data[index];
-                      if (data.isEmpty) {
-                        return const Center(
-                          child: Text ('sdds')
-                        );
-                      } else {
-                        return CustomFocusWidget(
-                          title: c.title,
-                          desc: c.description,
-                          period: c.period,
-                          color: c.color,
-                        );
-                      }
-                    })),
+
+            data.isEmpty
+                ? Column(children: [
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.2),
+                    const Column(
+                      children: [
+                        Center(
+                            child: Text('There is\'t any focus Now',
+                                style: TextStyle(
+                                    color: Colors.grey, fontSize: 20))),
+                        SizedBox(height: 10),
+                        Icon(Icons.no_backpack_outlined,
+                            size: 70, color: Colors.grey),
+                      ],
+                    )
+                  ])
+                : Expanded(
+                    child: ListView.builder(
+                        itemCount: data.length == 0 ? 0 : data.length,
+                        itemBuilder: (con, index) {
+                          FocusModel c = data[index];
+
+                          return CustomFocusWidget(
+                            title: c.title,
+                            desc: c.description,
+                            period: c.period,
+                            color: c.color,
+                          );
+                        })),
           ],
         ),
       ),

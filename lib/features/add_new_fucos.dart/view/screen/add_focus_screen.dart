@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:focus_area_app/core/routring/routers.dart';
 import 'package:focus_area_app/features/add_new_fucos.dart/data/save_focus_item.dart';
 import 'package:focus_area_app/features/add_new_fucos.dart/model/focus_model.dart';
 import 'package:focus_area_app/features/add_new_fucos.dart/view/widgets/custom_text_field_add_focus.dart';
@@ -98,8 +99,8 @@ class _AddNewFocusState extends State<AddNewFocus> {
           const Spacer(),
           SaveBtn(
             func: () {
-              if (textConlrTitle.text.isEmpty &&
-                  textConlrDesc.text.isEmpty &&
+              if (textConlrTitle.text.isEmpty ||
+                  textConlrDesc.text.isEmpty ||
                   textConlrPeriod.text.isEmpty) {
                 setState(() {
                   alart = 'Enter All Text feild is requrd';
@@ -108,21 +109,25 @@ class _AddNewFocusState extends State<AddNewFocus> {
                 alart = '';
 
                 setState(() {
-                  SaveFocusItemService.addNewFocusItem(
-                      focusModel: FocusModel(
-                          id: '1',
-                          title: textConlrTitle.text,
-                          description: textConlrDesc.text,
-                          period: textConlrPeriod.text,
-                          color: 'red'));
+                  addNewFocus('1', textConlrTitle.text, textConlrDesc.text,
+                      textConlrPeriod.text);
+                  SaveFocusItemService.getAllFocuss();
                 });
 
-                Navigator.of(context).pop();
+                Navigator.of(context).pushNamed(Routers.homeScreen);
               }
             },
           ),
         ],
       ),
+    );
+  }
+
+  Future<void> addNewFocus(
+      String id, String title, String dec, String period) async {
+    await SaveFocusItemService.addNewFocusItem(
+      focusModel: FocusModel(
+          id: id, title: title, description: dec, period: period, color: 'red'),
     );
   }
 }
