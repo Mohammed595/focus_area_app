@@ -18,13 +18,24 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getD();
+
     fetchData();
   }
 
+  /*
+    my bugs: 
+        - after save don't show it dirctly in home page 
+        - after run app don't show dirctly in home page 
+        - if there is't data don't show hint about it
+  */
+
   Future<List<FocusModel>> getD() async {
     List<FocusModel> data = await SaveFocusItemService.getAllFocuss();
-    print('items: ${data[0].title}');
+    if (data.isEmpty) {
+      print('is empyt <><>');
+    } else {
+      print('items: ${data[0].title}');
+    }
     return data;
   }
 
@@ -34,7 +45,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<FocusModel> data = [];
 
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,9 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             // app bar
             const AppBarForHomeScreen(),
-
             const SizedBox(height: 10),
-
             // quick focus
             GestureDetector(
               onTap: () {
@@ -98,12 +106,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemCount: data.length == 0 ? 0 : data.length,
                     itemBuilder: (con, index) {
                       FocusModel c = data[index];
-                      return CustomFocusWidget(
-                        title: c.title,
-                        desc: c.description,
-                        period: c.period,
-                        color: c.color,
-                      );
+                      if (data.isEmpty) {
+                        return const Center(
+                          child: Text ('sdds')
+                        );
+                      } else {
+                        return CustomFocusWidget(
+                          title: c.title,
+                          desc: c.description,
+                          period: c.period,
+                          color: c.color,
+                        );
+                      }
                     })),
           ],
         ),

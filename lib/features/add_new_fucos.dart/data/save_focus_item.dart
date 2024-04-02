@@ -47,4 +47,9 @@ class SaveFocusItemService {
 
     return xx.firstWhere((element) => element.id == idd);
   }
+
+
+  static void reomveAll () {
+    shardPref.remove(focusItemsKey);
+  }
 }
